@@ -61,6 +61,10 @@ def normalize_image(img: np.ndarray,
         The normalized image
     """
 
+    # bitonal image, cant preproces!
+    if len(np.unique(img)) <= 2:
+        return img
+
     # 1) Crop the image before getting the center of mass
 
     # Apply a gaussian filter on the image to remove small components

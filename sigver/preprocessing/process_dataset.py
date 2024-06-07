@@ -7,7 +7,16 @@ from sigver.datasets import available_datasets
 from sigver.datasets.base import IterableDataset
 from sigver.datasets.util import process_dataset_images
 
-from sigver.preprocessing.normalize import preprocess_signature
+# from sigver.preprocessing.normalize import preprocess_signature
+
+
+def my_preprocess_signature(img: np.ndarray,
+                            canvas_size: Tuple[int, int],
+                            img_size: Tuple[int, int] = (170, 242),
+                            input_size: Tuple[int, int] = (150, 220)) -> np.ndarray:
+    img = img.astype(np.uint8)
+    inverted = 255 - img
+    return inverted
 
 
 def process_dataset(dataset: IterableDataset,
@@ -34,13 +43,13 @@ def process_dataset(dataset: IterableDataset,
     None
 
     """
-    preprocess_fn = functools.partial(preprocess_signature,
+    preprocess_fn = functools.partial(my_preprocess_signature,
                                       canvas_size=dataset.maxsize,
                                       img_size=img_size,
-                                      input_size=img_size) # Don't crop it now
+                                      input_size=img_size)  # Don't crop it now
 
     if subset is None:
-        subset = slice(None) # Use all
+        subset = slice(None)  # Use all
     processed = process_dataset_images(dataset, preprocess_fn, img_size, subset)
     x, y, yforg, user_mapping, used_files = processed
 

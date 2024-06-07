@@ -3,6 +3,6 @@ numpy
 matplotlib >= 2.0
 torch >= 1.0
 torchvision >= 0.2.1
-git+git://github.com/luizgh/visdom_logger#egg=visdom_logger
+git+https://github.com/luizgh/visdom_logger.git
 scikit-learn
 scikit-image
